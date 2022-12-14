@@ -27,4 +27,4 @@ jobs:
           authToken: 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
           context: Netlify preview
           state: success
-          target_url: https://main--my-socket.netlify.app
+          target_url: https://eclectic-conkies-ecb50f.netlify.app/
