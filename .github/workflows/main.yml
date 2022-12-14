@@ -1,32 +1,21 @@
-name: "ci-cd pipeline"
+name: 'Netlify Previews'
 
-on: 
+on:
   push:
-    branches:
-    - main
+    branches: 'main'
 
 jobs:
-  build:
+  deploy:
+    name: 'Deploy'
     runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js 16.x
-      uses: actions/setup-node@v2
-      with:
-        node-version: 16.x
-        cache: 'npm'
-        cache-dependency-path: package-lock.json
-    - name: Install dependencies
-      run: npm install 
-    - name: Build file
-      run: npm run build
-      
 
-    - name: Deploy production to Netlify
-      uses: South-Paw/action-netlify-deploy@v1.2.0
-      with:
-        github-token: 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
-        netlify-auth-token: VWnw4TML6a1_x8Rw6DlQJ7u2EgWdl09ir2ItYPQg4b4
-        netlify-site-id: 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
-        build-dir: './build'
-        comment-on-commit: true
+    steps:
+      - uses: actions/checkout@v1
+
+      # Sets the branch name as environment variable
+      - uses: nelonoel/branch-name@v1.0.1
+      - uses: jsmrcaga/action-netlify-deploy@master
+        with:
+          NETLIFY_AUTH_TOKEN: VWnw4TML6a1_x8Rw6DlQJ7u2EgWdl09ir2ItYPQg4b4
+          NETLIFY_SITE_ID: d7b97815-03da-4003-9bc2-b60b2a17f8fb
+          deploy_alias: ${{ env.BRANCH_NAME }}
